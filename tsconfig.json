@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "*": ["types/*"] },
+    "baseUrl": ".",
+    "paths": { "*": ["types/*"] },
+    "outDir": "./build",
+    "allowJs": true,
+    "target": "es6"
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

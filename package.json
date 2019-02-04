@@ -1,29 +1,31 @@
 {
-	"name": "node-yeelight",
-	"version": "1.0.6",
-	"description": "Control Xiaomi Yeelight WiFi enabled smart light bulbs",
-	"keywords": [
-		"yeelight",
-		"xiaomi",
-		"mi",
-		"e27",
-		"wifi",
-		"smart light",
-		"led bulb"
-	],
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "James Blanksby",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jamesblanksby/node-yeelight"
-	},
-	"dependencies": {
-		"ip": "^1.1.4",
-		"lodash": "^4.17.2",
-		"net": "^1.0.2"
-	}
+  "name": "ts-node-yeelight",
+  "version": "1.0.6",
+  "keywords": [
+    "yeelight",
+    "xiaomi",
+    "mi",
+    "e27",
+    "wifi",
+    "smart light",
+    "led bulb"
+  ],
+  "main": "src/Yeelight.ts",
+  "scripts": {},
+  "author": "James Blanksby",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesblanksby/node-yeelight"
+  },
+  "dependencies": {
+    "dgram-as-promised": "^2.0.0",
+    "ip": "^1.1.4",
+    "net": "^1.0.2",
+    "typescript": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/ip": "^1.1.0",
+    "@types/node": "^10.12.21"
+  }
 }
