@@ -1,6 +1,6 @@
 {
   "name": "ts-node-yeelight",
-  "version": "1.0.6",
+  "version": "0.0.1",
   "keywords": [
     "yeelight",
     "xiaomi",
@@ -12,12 +12,8 @@
   ],
   "main": "src/Yeelight.ts",
   "scripts": {},
-  "author": "James Blanksby",
+  "author": "Andrea Silvestroni",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jamesblanksby/node-yeelight"
-  },
   "dependencies": {
     "dgram-as-promised": "^2.0.0",
     "ip": "^1.1.4",
