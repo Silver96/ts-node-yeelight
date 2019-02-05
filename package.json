@@ -1,18 +1,19 @@
 {
   "name": "ts-node-yeelight",
-  "version": "0.0.3",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "version": "0.0.5",
   "keywords": [
     "yeelight",
-    "xiaomi",
-    "mi",
-    "e27",
-    "wifi",
-    "smart light",
-    "led bulb"
+    "xiaomi"
   ],
-  "main": "src/Yeelight.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest",
+    "lint": "tslint -p . --fix",
+    "prepare": "build",
+    "prepublishOnly": "yarn test && yarn lint",
+    "preversion": "yarn lint"
   },
   "author": "Andrea Silvestroni",
   "license": "MIT",
@@ -20,10 +21,14 @@
     "dgram-as-promised": "^2.0.0",
     "ip": "^1.1.4",
     "net": "^1.0.2",
-    "typescript": "^3.3.1"
+    "tslint": "^5.12.1"
   },
   "devDependencies": {
     "@types/ip": "^1.1.0",
-    "@types/node": "^10.12.21"
+    "@types/jest": "^24.0.0",
+    "@types/node": "^10.12.21",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.3.1"
   }
 }
