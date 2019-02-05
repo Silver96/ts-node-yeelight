@@ -1,8 +1,10 @@
 # ts-node-yeelight
 
-## Licence
+## License
 
 (The MIT License)
+
+Copyright (c) 2019 Andrea Silvestroni
 
 Copyright (c) 2016 James Blanksby james@blanks.by
 

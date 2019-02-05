@@ -11,7 +11,9 @@
     "led bulb"
   ],
   "main": "src/Yeelight.ts",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc"
+  },
   "author": "Andrea Silvestroni",
   "license": "MIT",
   "dependencies": {
