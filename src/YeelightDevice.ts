@@ -29,49 +29,71 @@ export class YeelightDevice implements IYeelightDeviceFields {
     }
 
     public async turnOn() {
-        let request = {
+        this.power = true;
+
+        const request = {
             id: 1,
             method: 'set_power',
             params: ['on', 'smooth', 300],
-        }
+        };
 
         await this.sendCommand(request);
     }
 
     public async turnOff() {
-        let request = {
+        this.power = false;
+
+        const request = {
             id: 1,
             method: 'set_power',
             params: ['off', 'smooth', 300],
-        }
+        };
 
         await this.sendCommand(request);
     }
 
-    public toggle() {
-        if (this.power === 'on') {
-            this.turnOff();
+    public toggle(): Promise<void> {
+        if (this.power) {
+            return this.turnOff();
         } else {
-            this.turnOn()
+            return this.turnOn();
         }
     }
 
-    public connect() {
-        if (this.connected === false && this.socket === null) {
+    public async connect(): Promise<boolean> {
+        console.log('connecting');
+        throw new Error('');
+        if (this.connected === false) {
             this.socket = new net.Socket();
-
-            this.socket.connect(this.port, this.host, () => {
+            return new Promise((resolve, reject) => {
+                if (this.socket) {
+                    try {
+                        console.log('calling connect');
+                        this.socket.connect(this.port, this.host, () => {
+                            resolve()
+                        });
+                    } catch (e) {
+                        reject();
+                    }
+                }
+            }).then(() => {
                 this.connected = true;
+                return true;
+            }).catch(() => {
+                return false;
             });
+        } else {
+            console.log('already connected');
+            return true;
         }
     }
 
     public async sendCommand(command: any) {
         if (this.connected === false || this.socket === null) {
-            console.log(`${this.id} is not connected, can't send command`);
+            // console.log(`${this.id} is not connected, can't send command`);
             return;
         }
-        let message = JSON.stringify(command);
+        const message = JSON.stringify(command);
         this.socket.write(message + '\r\n');
     }
 

@@ -19,4 +19,9 @@ export declare class YeelightDevice implements IYeelightDeviceFields {
         host: string;
         port: number;
     });
+    turnOn(): Promise<void>;
+    turnOff(): Promise<void>;
+    toggle(): void;
+    connect(): void;
+    sendCommand(command: any): Promise<void>;
 }

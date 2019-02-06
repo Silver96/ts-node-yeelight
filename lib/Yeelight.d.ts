@@ -11,7 +11,6 @@ export declare class Yeelight extends EventEmitter {
     listen(): Promise<void>;
     close(): Promise<void>;
     discover(): Promise<{}>;
-    connect(device: YeelightDevice): void;
     sendMessage(message: string, address: string): Promise<number>;
     addDevice(device: YeelightDevice): void;
     private handleDiscovery;
