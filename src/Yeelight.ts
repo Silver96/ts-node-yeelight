@@ -49,18 +49,6 @@ export class Yeelight extends EventEmitter {
         });
     }
 
-    public connect(device: YeelightDevice) {
-        if (device.connected === false && device.socket === null) {
-            device.socket = new net.Socket();
-
-            device.socket.connect(device.port, device.host, () => {
-                device.connected = true;
-
-                this.emit("deviceconnected", device);
-            });
-        }
-    }
-
     public async sendMessage(message: string, address: string) {
         const buffer = Buffer.from(message);
         return this.socket.send(buffer, 0, buffer.length, this.options.discoveryPort, address);
