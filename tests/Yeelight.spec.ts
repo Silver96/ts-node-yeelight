@@ -14,7 +14,6 @@ describe('Yeelight instance setup', () => {
     }, 2000);
 
     it('Instance can discover', async () => {
-        await instance.listen();
         await instance.discover();
         expect(instance.devices).toHaveLength(2);
         expect(instance.devices).toEqual(expect.arrayContaining([expect.objectContaining({ id: '0x0000000005ed214f' })]));

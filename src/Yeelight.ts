@@ -12,37 +12,49 @@ export class Yeelight extends EventEmitter {
     public options: YeelightOptions;
     public devices: YeelightDevice[] = [];
 
-    private socket: SocketAsPromised;
+    private socket: SocketAsPromised | undefined;
     private discoveryTimeout: number | null = null;
 
     constructor(options: IYeelightOptionFields = {}) {
         super();
+        this.options = new YeelightOptions(options);
+    }
+
+    public init() {
         this.socket = createSocket("udp4");
         this.socket.socket.on("message", this.messageCallback.bind(this));
-        this.options = new YeelightOptions(options);
     }
 
     public async listen() {
         try {
-            const promise = this.socket.bind(this.options.listenPort, this.options.listenAddress);
-            return promise.then(() => {
-                this.socket.setBroadcast(true);
-            });
+            this.init();
+            if (this.socket) {
+                const promise = this.socket.bind(this.options.listenPort, this.options.listenAddress);
+                return promise.then(() => {
+                    if (this.socket) {
+                        this.socket.setBroadcast(true);
+                    }
+                });
+            }
         } catch (e) {
             throw e;
         }
     }
 
     public async close() {
-        return this.socket.close();
+        if (this.socket) {
+            return this.socket.close();
+        }
     }
 
     public async discover() {
+        await this.init();
+        await this.listen();
         await this.sendMessage(this.options.discoveryMsg, this.options.discoveryAddress);
         return new Promise((resolve) => {
-            setTimeout(() => {
+            setTimeout(async () => {
                 this.emit("discoverycompleted");
-                this.socket.socket.close();
+                await this.close();
                 this.discoveryTimeout = null;
                 resolve();
             }, this.options.discoveryTimeoutSeconds * 1000);
@@ -51,7 +63,9 @@ export class Yeelight extends EventEmitter {
 
     public async sendMessage(message: string, address: string) {
         const buffer = Buffer.from(message);
-        return this.socket.send(buffer, 0, buffer.length, this.options.discoveryPort, address);
+        if (this.socket) {
+            return this.socket.send(buffer, 0, buffer.length, this.options.discoveryPort, address);
+        }
     }
 
     public addDevice(device: YeelightDevice) {
@@ -88,7 +102,7 @@ export class Yeelight extends EventEmitter {
                 device.port = parseInt(tmp[2], 10);
             }
             if (header.indexOf("power:") >= 0) {
-                device.power = header.slice(7);
+                device.power = header.slice(7) === "on";
             }
             if (header.indexOf("bright:") >= 0) {
                 device.brightness = header.slice(8);

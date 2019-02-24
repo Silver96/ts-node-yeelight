@@ -1,6 +1,6 @@
-import * as net from 'net';
-import { Socket } from 'net';
-import { IYeelightDeviceFields } from './YeelightInterfaces';
+import * as net from "net";
+import { Socket } from "net";
+import { IYeelightDeviceFields } from "./YeelightInterfaces";
 
 export class YeelightDevice implements IYeelightDeviceFields {
 
@@ -15,7 +15,7 @@ export class YeelightDevice implements IYeelightDeviceFields {
     public brightness: any;
     public hue: any;
     public model: any;
-    public power: any;
+    public power: boolean = false;
     public rgbDec: any;
     public saturation: any;
 
@@ -29,27 +29,25 @@ export class YeelightDevice implements IYeelightDeviceFields {
     }
 
     public async turnOn() {
-        this.power = true;
-
         const request = {
             id: 1,
-            method: 'set_power',
-            params: ['on', 'smooth', 300],
+            method: "set_power",
+            params: ["on", "smooth", 300],
         };
 
         await this.sendCommand(request);
+        this.power = true;
     }
 
     public async turnOff() {
-        this.power = false;
-
         const request = {
             id: 1,
-            method: 'set_power',
-            params: ['off', 'smooth', 300],
+            method: "set_power",
+            params: ["off", "smooth", 300],
         };
 
         await this.sendCommand(request);
+        this.power = false;
     }
 
     public toggle(): Promise<void> {
@@ -61,16 +59,13 @@ export class YeelightDevice implements IYeelightDeviceFields {
     }
 
     public async connect(): Promise<boolean> {
-        console.log('connecting');
-        throw new Error('');
         if (this.connected === false) {
             this.socket = new net.Socket();
             return new Promise((resolve, reject) => {
                 if (this.socket) {
                     try {
-                        console.log('calling connect');
                         this.socket.connect(this.port, this.host, () => {
-                            resolve()
+                            resolve();
                         });
                     } catch (e) {
                         reject();
@@ -83,7 +78,6 @@ export class YeelightDevice implements IYeelightDeviceFields {
                 return false;
             });
         } else {
-            console.log('already connected');
             return true;
         }
     }
@@ -94,7 +88,7 @@ export class YeelightDevice implements IYeelightDeviceFields {
             return;
         }
         const message = JSON.stringify(command);
-        this.socket.write(message + '\r\n');
+        this.socket.write(message + "\r\n");
     }
 
     //

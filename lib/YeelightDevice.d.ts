@@ -10,7 +10,7 @@ export declare class YeelightDevice implements IYeelightDeviceFields {
     brightness: any;
     hue: any;
     model: any;
-    power: any;
+    power: boolean;
     rgbDec: any;
     saturation: any;
     constructor(params?: {
@@ -21,7 +21,7 @@ export declare class YeelightDevice implements IYeelightDeviceFields {
     });
     turnOn(): Promise<void>;
     turnOff(): Promise<void>;
-    toggle(): void;
-    connect(): void;
+    toggle(): Promise<void>;
+    connect(): Promise<boolean>;
     sendCommand(command: any): Promise<void>;
 }

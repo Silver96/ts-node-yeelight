@@ -8,10 +8,11 @@ export declare class Yeelight extends EventEmitter {
     private socket;
     private discoveryTimeout;
     constructor(options?: IYeelightOptionFields);
+    init(): void;
     listen(): Promise<void>;
     close(): Promise<void>;
     discover(): Promise<{}>;
-    sendMessage(message: string, address: string): Promise<number>;
+    sendMessage(message: string, address: string): Promise<number | undefined>;
     addDevice(device: YeelightDevice): void;
     private handleDiscovery;
     private messageCallback;
