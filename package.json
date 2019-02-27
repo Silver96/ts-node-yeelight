@@ -1,8 +1,9 @@
 {
   "name": "ts-node-yeelight",
+  "repository": "https://github.com/Silver96/ts-node-yeelight",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "keywords": [
     "yeelight",
     "xiaomi"
